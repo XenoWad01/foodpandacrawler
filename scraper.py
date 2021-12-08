@@ -76,14 +76,14 @@ def check_exists_and_get(xpath):
 def wait_for_element(xpath):
         return wait.until(expected_conditions.visibility_of_element_located((By.XPATH, xpath)))
 
-# Helper function that c̶l̶o̶s̶e̶s̶ literally F͟U͟C͟K͟S͟  modals into oblivion if any pop up
-def fuck_modal(xpath):
-    print(f' -> modal fucking closed, 🔥cunt🔥')
+# Helper function that literally modals into oblivion if any pop up
+def close_modal(xpath):
+    print(f' -> modal closed')
     modal = check_exists_and_get(xpath)
     if modal:
         driver.find_element(By.XPATH, xpath).click()
     else:
-        print(' +  gay ass modal will not pop up so we don\'t wait for it, cunt')
+        print(' +  modal will not pop up so we don\'t wait for it')
 
 
 # Helper function that parses the address into the required format
@@ -218,7 +218,7 @@ def scrape_vendor(vendor):
     # We set the user agent to random one on each request so we don't get are you a robot capcah
     driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": {"User-Agent": f"{user_agent_provider.random}"}})
 
-    # here we can set the xpath of the damn pesky ass modal we want to delete from existance
+    # here we can set the xpath of the damn pesky modal we want to delete from existance
     xpath_of_modal_to_close = "/html/body/div[1]/div[2]/div/div[2]/div/button"
 
     print('----------------- ATTEMPTING TO 🔥🔥STEAL🔥🔥 VENDOR DATA -----------------')
@@ -231,9 +231,8 @@ def scrape_vendor(vendor):
     driver.get(vendor_link)
     print(f' ->  navigating to {vendor_link}')
 
-    # Fuck modals, just fuck em and fuck foodpanda too. I swear to god this took hours off my life for no logical reason. 
     solve_captcha_if_any()
-    fuck_modal(xpath_of_modal_to_close)
+    close_modal(xpath_of_modal_to_close)
     # we need to find the info button to click
     try:
         info_button = wait_for_element('//*[@id="reactRoot"]/main/div/div/section[1]/div[2]/div[1]/div/button[2]')
@@ -283,7 +282,7 @@ vendor_list = driver.find_element(By.CLASS_NAME, "vendor-list").find_elements(By
 #   to the list elements as they technically do not exist anymore
 #   so we need to get the list on each iteration.
 
-# We loop through vendors and scrape the fuck out of each of them
+# We loop through vendors and scrape each of them
 for i in range(len(vendor_list)):
     vendors = driver.find_element(By.CLASS_NAME, "vendor-list").find_elements(By.XPATH, 'li')
     scrape_vendor(vendors[i])
